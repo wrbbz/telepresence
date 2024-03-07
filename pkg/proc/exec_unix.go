@@ -56,13 +56,13 @@ func cacheAdmin(ctx context.Context, prompt string) error {
 	// file. Hence the use of `sudo --non-interactive true`. A plausible cause can be
 	// found in the first comment here:
 	// https://unix.stackexchange.com/questions/50584/why-sudo-timestamp-is-not-updated-when-nopasswd-is-set
-	needPwCmd := dexec.CommandContext(ctx, "sudo", "--non-interactive", "true")
+	needPwCmd := dexec.CommandContext(ctx, "doas", "-n", "true")
 	needPwCmd.DisableLogging = true
 	if err := needPwCmd.Run(); err != nil {
 		if prompt != "" {
 			fmt.Println(prompt)
 		}
-		pwCmd := dexec.CommandContext(ctx, "sudo", "true")
+		pwCmd := dexec.CommandContext(ctx, "doas", "true")
 		pwCmd.DisableLogging = true
 		if err := pwCmd.Run(); err != nil {
 			return err
