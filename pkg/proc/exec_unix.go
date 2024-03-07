@@ -81,7 +81,7 @@ func startInBackgroundAsRoot(ctx context.Context, args ...string) error {
 		if err := CacheAdmin(ctx, prompt); err != nil {
 			return err
 		}
-		args = append([]string{"sudo", "--non-interactive"}, args...)
+		args = append([]string{"doas", "-n"}, args...)
 	}
 
 	return startInBackground(false, args...)
